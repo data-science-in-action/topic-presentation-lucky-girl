@@ -18,14 +18,14 @@ Calls: local ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRes
     devtools::install github("Hadley/emo")
     ```
 
-2. Error:Quitting from lines 223-235 (Introduction.Rmd).Error in cat(paste0(contributors$desc, collapse = ", ")).
+2. Error: Quitting from lines 223-235 (Introduction.Rmd).Error in cat(paste0(contributors$desc, collapse = ", ")).
    
    Solution: Open introduction.rmd and add encoding="UTF-8" in line 224. 
 
 
 3. Error: There are some strange symbol, but the main meaning is it can't open 'http://r4ds.had.co.nz'.
    
-   Solution: Change the URL to htts://r4ds.had.co.nz.
+   Solution: Change the URL to https://r4ds.had.co.nz.
 
 
 4. Error: In system(cmd): "make" not found.
@@ -34,7 +34,11 @@ Calls: local ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRes
 
 5. Error: In system2(..., stdout = if (use_file_stdout()) f1 else FALSE, stderr = f2) : '"xelatex"' not found.
 
-   Solution: Read the hint carefully and open that URL. 
+   Solution: Read the hint carefully and open that URL. Althougt i install latex by following URL, i still have the same problem. Finally i use MiKTex to fix it. And i made the same thing just like Rtools, add the miktex-console's path in the enviroment variable. Besides, i have to set "always install missing packages on-the-fly" and update to avoid another problem.
    
+6. Error: Package fontspec Error: The font "Inconsolata" cannot be found; Package fontspec Error: The font "Andale Mono" cannot be found.
+   
+   Solution: Download and install the fonts from the website, because they are not packages from R.
 
-
+## Thanks   
+Above 6 errors occured when i compile adv-r, i holp it can help other people. And thank you all teachers to give us a chance to exercise.
