@@ -1,0 +1,40 @@
+---
+title: "problems and solutions about compiling adv-r"
+author: "guofang"
+date: "2020/3/20"
+output:
+  html_document:
+    df_print: paged
+  pdf_document: default
+---
+## errors and solutions
+1. Error: there is no packages called "bookdown" "rmarkdown" "dplyr" and so on. Sometimes, this kind of error just like this
+"Error in loadNamespace(name) : �����ڽ�'RSQLite'������ֵĳ̼���
+Calls: local ... loadNamespace -> withRestarts -> withOneRestart -> doWithOneRestart". 
+
+   Solution: Install these packages when above error occured. Especially, when i install package emo, it reminds me emo is not available for my version, R 3.6.3. So i have to install this packages by using github. The code i use is:
+    ```{r eval=FALSE}
+    install.packages("devtools")
+    devtools::install github("Hadley/emo")
+    ```
+
+2. Error:Quitting from lines 223-235 (Introduction.Rmd).Error in cat(paste0(contributors$desc, collapse = ", ")).
+   
+   Solution: Open introduction.rmd and add encoding="UTF-8" in line 224. 
+
+
+3. Error: There are some strange symbol, but the main meaning is it can't open 'http://r4ds.had.co.nz'.
+   
+   Solution: Change the URL to htts://r4ds.had.co.nz.
+
+
+4. Error: In system(cmd): "make" not found.
+   
+   Solution: Download software Rtools. Then, change add the Rtools's file-bin path in the systerm setting.But you need to download it at default path. When i change the path, it still occured some error.
+
+5. Error: In system2(..., stdout = if (use_file_stdout()) f1 else FALSE, stderr = f2) : '"xelatex"' not found.
+
+   Solution: Read the hint carefully and open that URL. 
+   
+
+
