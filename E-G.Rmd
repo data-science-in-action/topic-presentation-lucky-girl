@@ -1,0 +1,74 @@
+---
+title: "E-GARCH"
+output: html_document
+---
+
+
+## Mathematical Formula 
+
+Nelson (1991) proposes the exponential GARCH (EGARCH) model. In particular, to allow for asymmetric effects between positive and negative asset returns, he considered the weighted innovation
+
+\begin{equation}
+g(ϵ_{t})=θε_{t}+γ[|ε_{t}|-E|ε_{t}|]
+\end{equation}
+
+where θ and γ are real constants. Both $ε_{t}$ and $|ε_{t}|-E|ε_{t}|$ are zero-mean iid sequences with continuous distributions. Therefore,$E[g(ϵ_{t})]=0$. The asymmetry of $g(ϵ_{t})$ can easily be seen by rewriting it as 
+
+
+$$g(ϵ_{t})=
+\begin{cases}
+(θ+γ) ε_{t}-γE(|ε_{t} |)& \text{if $ε_{t}$≥0}\\
+(θ-γ) ε_t-γE(|ε_{t} |)& \text{if $ε_{t}$<0}
+\end{cases}$$
+
+
+An EGARCH(m, s) model can be written as 
+
+
+ \begin{equation}
+a_{t}=\sigma_{t}ϵ_{t}
+\end{equation}
+
+\begin{equation}
+In(\sigma_{t}^2)=\alpha_{0}+\frac{1+\beta_{1}B+...+\beta_{s-1}B^{s-1}}{1-\alpha_{1}B-...-\alpha_{m}B^m}{g(ϵ_{t-1})}
+\end{equation}
+ 
+ 
+ 
+ where $\alpha_{0}$ is a constant, B is the back-shift (or lag) operator such that $Bg(ϵ_{t}) = g(ϵ_{t-1})$, and$1+\beta_{1}B+...+\beta_{s-1}B^{s-1}$and $1-\alpha_{1}B-...-\alpha_{m}B^m$ are polynomials with zeros outside the unit circle and have no common factors. By outside the unit circle we mean that absolute values of the zeros are greater than 1. Again, Eq.  uses the usual ARMA parameterization to describe the evolution of the conditional variance of $a_{t}$ . Based on this representation, some properties of the EGARCH model can be obtained in a similar manner as those of the GARCH model. For instance, the unconditional mean of $In(\sigma_{t}^2)$ is $\alpha_{0}$. However, the model differs from the GARCH model in several ways. First, it uses logged conditional variance to relax the positiveness constraint of model coefficients. Second, the use of $g(ϵ_{t})$ enables the model to respond asymmetrically to positive and negative 144 conditional heteroscedastic models lagged values of at . Some additional properties of the EGARCH model can be found in Nelson (1991).
+ 
+ 
+ To better understand the EGARCH model, let us consider the simple model with order (1,1): 
+ 
+ \begin{equation}
+a_{t}=\sigma_{t}ϵ_{t}
+\end{equation}
+
+\begin{equation}
+(1-\alpha*B)In(\sigma_{t}^2)=(1-\alpha)\alpha_{0}+g(ϵ_{t-1})
+\end{equation}
+ 
+ 
+ , where the$ϵ_{t}$are iid standard normal and the subscript of α1 is omitted. In this case, $E(|ϵ_{t}|)=\sqrt{2/\pi}$ and the model for $In(\sigma_{t}^2)$ becomes 
+ 
+ \begin{equation}
+(1-\alpha*B)In(\sigma_{t}^2)=\begin{cases}
+\alpha_{*}+(θ+γ) ε_{t-1}& \text{if$ ε_{t-1}$≥0}\\
+\alpha_{*}+(γ-θ) (-ε_{t-1})& \text{if $ε_{t-1}$<0)}
+\end{cases}
+\end{equation}
+ 
+ 
+ where $\alpha_{*}=(1-\alpha)\alpha_{0}-\sqrt{2/\pi}γ$ . This is a nonlinear function similar to that of the threshold autoregressive (TAR) model of Tong (1978, 1990). It suffices to say that for this simple EGARCH model the conditional variance evolves in a nonlinear manner depending on the sign of $a_{t-1}$. Specifically, we have
+ \begin{equation}
+ \sigma_{t}^2=\sigma_{t-1}^{2\alpha}exp(\alpha_{*})=\begin{cases}
+exp[(θ+γ)\frac{a_{t-1}}{\sigma_{t-1}}]& \text{if $a_{t-1}$≥0}\\
+exp[(γ-θ)\frac{|a_{t-1}|}{\sigma_{t-1}}]& \text{if $a_{t-1}$<0}
+\end{cases}
+\end{equation}
+  
+ 
+ . The coefficients (γ + θ ) and (γ − θ ) show the asymmetry in response to positive and negative $a_{t−1}$. The model is, therefore, nonlinear if$ θ\neq 0$. Since negative shocks tend to have larger impacts, we expect θ to be negative. For higher order EGARCH models, the nonlinearity becomes much more complicated. 
+
+
+
