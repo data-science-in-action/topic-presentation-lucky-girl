@@ -9,3 +9,6 @@
    GRACH.rmd 和 GRACH.html 是用 R 建立 GARCH 模型的一些操作
    
    E-G.Rmd 和 E-G.html 是用 R 建立 E-GARCH 模型的一些操作
+   
+   Project_01_Group_08.pptx 是其他小组有关股票和疫情之间关系可视化的展示 链接 https://github.com/saelbakr/COVID-Stocks
+   
