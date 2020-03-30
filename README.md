@@ -1,3 +1,11 @@
-1.The 2000-2017.csv is the data of Shanghai stock exchange between Between 2000 and 2017.
+1. 所有的数据都整理到了 data 文件夹中
 
-2.GRACH.rmd and GRACH.html is the process of operating GARCH model on R.
+   2000-2017.csv 是 2000-2017 上证交易所股票价格
+   
+   上证指数.csv 和 日经225指数.csv 是 2019.4-2020.3 上证交易所和日经的股票价格
+  
+2. preparation 中是有关每个人整理的一些模型、学习笔记
+
+   GRACH.rmd 和 GRACH.html 是用 R 建立 GARCH 模型的一些操作
+   
+   E-G.Rmd 和 E-G.html 是用 R 建立 E-GARCH 模型的一些操作
