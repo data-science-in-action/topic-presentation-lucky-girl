@@ -4,7 +4,9 @@
    
    NSDK.csv, 上证指数.csv 和 日经225指数.csv 是 2019.4-2020.3 纳斯达克指数，上证综指和日经225指数的股票收盘价格
    
-   case_all_province.csv 中是中国所有省份每日的病例数，case_hubei_data.csv 是湖北省每日病例数。数据来源于公众号狗熊会         https://mp.weixin.qq.com/s/weRWgY-c3eXAAzLAoZJB8A
+   case_all_province.csv 中是中国所有省份每日的病例数，case_hubei_data.csv 是湖北省每日病例数。数据来源于公众号狗熊会 
+   
+   https://mp.weixin.qq.com/s/weRWgY-c3eXAAzLAoZJB8A
   
 2. preparation 中是有关每个人整理的一些模型、学习笔记
 
