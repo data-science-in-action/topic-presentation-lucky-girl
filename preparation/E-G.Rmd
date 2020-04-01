@@ -1,5 +1,6 @@
 ---
 title: "E-GARCH"
+author：Liu Yuzhi 
 output: html_document
 ---
 
