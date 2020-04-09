@@ -5,7 +5,7 @@ output:
   slidy_presentation: default
   ioslides_presentation: default
 ---
-## 2.1 EGARCH模型的演变
+## 2.1 模型发展
 ### 2.1.1 ARCH模型
 ARCH模型，又称自回归条件异方差模型(Autoregressive conditional heteroskedasticity model)。
 ARCH模型出现是因为，传统计量模型假设样本方差不随时间变化，但是研究发现金融时间序列波动具有时变性，波动呈现聚集特点，因此，Engle(1982)提出ARCH模型拟合方差随时间变化的现象。
@@ -49,13 +49,13 @@ EGARCH模型的基本原理，使用均值方程的随机误差项和随机误�
 \end{align}
 方差方程：
 \begin{align}
-    In\delta_t^2 = \omega_0+\sum_{i=1}^p\alpha_i\frac{|\mu_{t-i}|}{\delta_i}+\sum_{i=1}^p\gamma_i\frac{\mu_{t-i}}{\delta_i}+\sum_{j=1}^q\beta_j In\delta_{t-j}
+    In\delta_t^2 = \omega_0+\sum_{i=1}^p\alpha_i\frac{|\mu_{t-i}|}{\delta_i}+\sum_{i=1}^p\gamma_i\frac{\mu_{t-i}}{\delta_i}+\sum_{j=1}^q\beta_j In\delta_{t-j}^2
 \end{align}
-  
-## 2.2 EGARCH模型的建模步骤
-1.序列平稳性检验
 
-为了避免在建模过程中出现伪回归问题，因此，首先要对序列平稳性进行检验，最常用的平稳性检验方法是ADF检验。其检验如下模型：
+## 2.2 建模步骤
+1.平稳性检验
+
+为了避免在建模过程中出现伪回归问题，因此，首先要对序列进行平稳性检验，最常用的检验方法是ADF检验，其检验如下模型：
 \begin{align}
     X_t = c_t+\beta X_{t-1}+\sum_{j=1}^{p-1}\phi_j\Delta X_{t-j}+e_t
 \end{align}
@@ -76,11 +76,11 @@ EGARCH模型的基本原理，使用均值方程的随机误差项和随机误�
 knitr::include_graphics("ACF.png")
 ```
 
-图中横轴上下两条水平下是在独立同分布白噪声假设下的加减两倍标准差，即$\pm \frac{2}{\sqrt{T}}$，如果独立同分布白噪声假设成立（白噪声序列的自相关函数为0），即不存在自相关性，每个自相关系数$\hat{\rho}_k$有95%以上的概率落入这两条线之间。因此，如果实际应用中，大部分ACF和PACF都落在两条线之间，我们认为该序列不存在自相关性。
+图中横轴上下两条水平下是在独立同分布白噪声假设下的均值加减两倍标准差，即$\pm \frac{2}{\sqrt{T}}$，如果独立同分布白噪声假设成立（白噪声序列的自相关函数为0），即不存在自相关性，每个自相关系数$\hat{\rho}_k$有95%以上的概率落入这两条线之间。因此，如果实际应用中，大部分ACF和PACF都落在两条线之间，我们认为该序列不存在自相关性。
 
 3.ARCH效应检验
 
-ARCH效应检验即检验序列是否存在异方差性，只有当序列存在异方差性时，可以使用GARCH、EGARCH模型，否则不能使用该类模型。为了检验ARCH效应，需建立均值模型，对残差$\mu_t$进行拟合，对残差序列的平方$\mu_t^2$作ARCH效应检验。常用的检验方法有两种，一种是Ljung-Box白噪声检验，该方法的原假设为：
+ARCH效应检验即检验序列是否存在异方差性，只有当序列存在异方差性时，可以使用GARCH、EGARCH模型，否则不能使用该类模型。为了检验ARCH效应，需建立均值模型，对残差$\mu_t$进行拟合，对残差序列的平方$\mu_t^2$作检验。常用的检验方法有两种，一种是Ljung-Box白噪声检验，该方法的原假设为：
 \begin{align}
     H_0:\rho_k =0,k=1,2,...
 \end{align}
@@ -88,7 +88,7 @@ ARCH效应检验即检验序列是否存在异方差性，只有当序列存在�
 \begin{align}
     Q(m)=T(T+2)\sum_{j=1}^{m}\frac{\hat{\rho}_j^2}{T-j}
 \end{align}
-在独立同分布白噪声假设下近似服从$\chi^2(m)$分布，当$Q(m)$太大时，拒绝$H_0$,认为该序列不是白噪声序列,存在异方差性，即存在ARCH效应。
+在独立同分布白噪声假设下近似服从$\chi^2(m)$分布，当$Q(m)$太大时，拒绝$H_0$，认为该序列不是白噪声序列，存在异方差性，即存在ARCH效应。
 
 另一种是拉格朗日乘数检验（ARCH-LM）。其方法考虑的如下的最小二乘问题：
 \begin{align}
@@ -107,12 +107,7 @@ ARCH效应检验即检验序列是否存在异方差性，只有当序列存在�
     F=\frac{(SSR_0-SSR_1)/m}{SSR_1/(T-2m-1)}
 \end{align}
 
-零假设为：
-\begin{align}
-    H_0:\alpha_1=\alpha_2=...=\alpha_m=0
-\end{align}
-
-在$H_0$成立时，$F$近似服从$F(m,T-2m-1)$。当$T$很大时$\chi^2(m)$，用$\chi^2(m)$分布计算$F$的右侧$p$值进行检验，当$p$值较小时，拒绝原假设，说明有ARCH效应，否则没有ARCH效应。
+在$H_0$成立时，$F$近似服从$F(m,T-2m-1)$。当$T$很大时，F的分母近似为一个常数，$mF$近似服从$\chi^2(m)$，用$\chi^2(m)$分布计算$p$值进行检验，当$p$值较小时，拒绝原假设，说明有ARCH效应，否则没有ARCH效应。
 
 4.模型建立
 
@@ -121,10 +116,10 @@ ARCH效应检验即检验序列是否存在异方差性，只有当序列存在�
 + 定阶：GARCH模型的定阶一般采用试错法尝试比较低的GARCH模型，如GARCH(1,1), GARCH(2,1), GARCH(1,2)等。许多情况下，GARCH(1,1)就能解决问题。
 + 模型验证：计算标准化残差
 \begin{align}
-    \hat{\mu_t}=frac{\mu_t}{\delta_t}
+    \hat{\mu}_t=\frac{\mu_t}{\delta_t}
 \end{align}
 
-$\hat{\mu}_t$应表现为零均值、单位标准差的独立同分布序列。对{$\hat{\mu}_t$}作Ljung-Box白噪声检验，考虑均值方程的充分性。对{$\hat{\mu}_t^2$}做Ljung-Box白噪声检验，可以考虑弄懂方程的充分性。
+$\hat{\mu}_t$应表现为零均值、单位标准差的独立同分布序列。对{$\hat{\mu}_t$}作Ljung-Box白噪声检验，考虑均值方程的充分性。对{$\hat{\mu}_t^2$}做Ljung-Box白噪声检验，可以考虑波动率方程的充分性。
 
 
 
