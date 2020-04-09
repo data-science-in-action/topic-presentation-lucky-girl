@@ -4,7 +4,6 @@ author: "Guo Fang"
 output:
   slidy_presentation: default
   ioslides_presentation: default
-fontsize: 11pt
 ---
 ## 2.1 EGARCH模型的演变
 ### 2.1.1 ARCH模型
@@ -68,22 +67,51 @@ EGARCH模型的基本原理，使用均值方程的随机误差项和随机误�
 \begin{align}
     ADF = \frac{\hat{\beta}}{SE(\hat{\beta)}}
 \end{align}
-当ADF统计量小于临界值时，拒绝原假设，认为序列是平稳的；当ADF统计量大于临界值时，不能拒绝原假设，认为序列包含单位根，是不平稳的。
+需要注意的是，ADF检验是单边检验，因此，当ADF统计量小于临界值时，拒绝原假设，认为序列是平稳的；当ADF统计量大于临界值时，不能拒绝原假设，认为序列包含单位根，是不平稳的。
 
 2.自相关性检验
 
-金融时间序列数据往往存在着明显的惯性与滞后性，即序列的自相关性，因此需要进行自相关性检验,并根据自相关图中自相关系数和偏自相关系数判断序列的滞后特征。其原假设和备择假设如下：
-\begin{align}
-H_0:序列不存在自相关性\longleftrightarrow H_1:序列存在自相关性
-\end{align}
-可以通过P值判断是否拒绝原假设，如果拒绝原假设则认为寻猎不存在自相关性；其次，还可以通过ACF图和PACF图判断是否存在自相关性。
+金融时间序列数据往往存在着明显的惯性与滞后性，即序列的自相关性，因此需要进行自相关性检验,主要的检验方法是，通过ACF图和PACF图判断是否存在自相关性。
 ```{R}
 knitr::include_graphics("ACF.png")
 ```
 
+图中横轴上下两条水平下是在独立同分布白噪声假设下的加减两倍标准差，即$\pm \frac{2}{\sqrt{T}}$，如果独立同分布白噪声假设成立（白噪声序列的自相关函数为0），即不存在自相关性，每个自相关系数$\hat{\rho}_k$有95%以上的概率落入这两条线之间。因此，如果实际应用中，大部分ACF和PACF都落在两条线之间，我们认为该序列不存在自相关性。
+
 3.ARCH效应检验
 
-ARCH效应检验即检验序列是否存在异方差性，只有当序列存在异方差性时，可以使用GARCH、EGARCH模型，否则不能使用该类模型。常用的检验方法有两种，一种是Ljung-Box白噪声检验，该种方法下当检验结果不显著时没有ARCH效应，检验结果显著时有ARCH效应。另一种是拉格朗日乘数检验（ARCH-LM），该方法下，原假设为不存在异方差性，因此，当LM值较大，p值较小时，拒绝原假设，说明有ARCH效应。
+ARCH效应检验即检验序列是否存在异方差性，只有当序列存在异方差性时，可以使用GARCH、EGARCH模型，否则不能使用该类模型。为了检验ARCH效应，需建立均值模型，对残差$\mu_t$进行拟合，对残差序列的平方$\mu_t^2$作ARCH效应检验。常用的检验方法有两种，一种是Ljung-Box白噪声检验，该方法的原假设为：
+\begin{align}
+    H_0:\rho_k =0,k=1,2,...
+\end{align}
+检验统计量为：
+\begin{align}
+    Q(m)=T(T+2)\sum_{j=1}^{m}\frac{\hat{\rho}_j^2}{T-j}
+\end{align}
+在独立同分布白噪声假设下近似服从$\chi^2(m)$分布，当$Q(m)>q\chi^2(1-\alpha,m)$时，拒绝$H_0$,认为该序列不是白噪声序列,存在异方差性，即存在ARCH效应。
+
+另一种是拉格朗日乘数检验（ARCH-LM）。其方法考虑的如下的最小二乘问题：
+\begin{align}
+    \mu_t^2=\alpha_0+\alpha_1\mu_{t-1}^2+...+\alpha_m\mu_{t-m}^2+e_t,t=m+1,...,T
+\end{align}
+其中，T为样本量，m是适当的AR阶数，$e_t$为回归残差。用普通最小二乘法估计该回归问题并计算残差$\hat{e}_t$。令
+\begin{align}
+    SSR_0=\sum_{t=m+1}^T(\mu_t^2-\bar{\omega})^2
+\end{align}
+其中$\bar{\omega}=\frac{1}{T}\sum_{t=1}^{T}\mu_t^2$是{$\mu^2}的样本均值。令
+\begin{align}
+    SSR_1=\sum_{t=m+1}^T\hat{e}_t^2
+\end{align}
+令
+\begin{align}
+    F=\frac{(SSR_0-SSR_1)/m}{SSR_1/(T-2m-1)}
+\end{align}
+
+零假设为：
+\begin{align}
+    H_0:\alpha_1=\alpha_2=...=\alpha_m=0
+
+该方法下，原假设为不存在异方差性，因此，当LM值较大，p值较小时，拒绝原假设，说明有ARCH效应。
 
 4.模型建立与参数估计
 
