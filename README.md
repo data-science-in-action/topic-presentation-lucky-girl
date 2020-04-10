@@ -17,3 +17,5 @@
    Project_01_Group_08.pptx 是其他小组有关股票和疫情之间关系可视化的展示 链接 https://github.com/saelbakr/COVID-Stocks
    
 3. Proposal 中包含html和rmd格式的项目建议书
+
+4. Presentation 中是 topic-presentation 的最终文件
